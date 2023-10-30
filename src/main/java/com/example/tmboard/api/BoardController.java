@@ -46,6 +46,11 @@ public class BoardController {
     }
 
     // 글 식제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MsgResponseDto> deleteBoard(@PathVariable Long id) {
+        boardService.deleteBoard(id);
+        return ResponseEntity.ok(new MsgResponseDto("삭제완료", HttpStatus.OK.value()));
+    }
 
     // 좋아요 누르기
 }

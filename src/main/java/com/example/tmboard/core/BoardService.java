@@ -58,4 +58,10 @@ public class BoardService {
 
         return id;
     }
+
+    @Transactional
+    public void deleteBoard(Long id) {
+        if (!boardRepository.existsById(id)) throw new RuntimeException();
+        boardRepository.deleteById(id);
+    }
 }
