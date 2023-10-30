@@ -1,10 +1,11 @@
 package com.example.tmboard.core;
 
-import com.example.tmboard.api.dto.request.CreateRequest;
-import com.example.tmboard.api.dto.response.BoardResponse;
-import com.example.tmboard.api.dto.response.BoardsResponse;
-import com.example.tmboard.domain.entity.Board;
-import com.example.tmboard.domain.repository.BoardRepository;
+import com.example.tmboard.api.dto.request.CreateBoardRequest;
+import com.example.tmboard.api.dto.request.ModifyBoardRequest;
+import com.example.tmboard.api.dto.response.GetBoardResponse;
+import com.example.tmboard.api.dto.response.GetBoardsResponse;
+import com.example.tmboard.domain.Board;
+import com.example.tmboard.domain.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,17 +18,17 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public void createBoard(CreateRequest request) {
+    public void createBoard(CreateBoardRequest request) {
         Board newBoard = new Board();
         newBoard.createBoard(request.getTitle(), request.getContent());
         boardRepository.save(newBoard);
     }
 
     @Transactional(readOnly = true)
-    public List<BoardsResponse> getBoards() {
+    public List<GetBoardsResponse> getBoards() {
         List<Board> boards = boardRepository.findAll();
         return boards.stream()
-                .map(board -> BoardsResponse.builder()
+                .map(board -> GetBoardsResponse.builder()
                         .id(board.getId())
                         .title(board.getTitle())
                         .likes(board.getLikes())
@@ -36,15 +37,25 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public BoardResponse getBoard(Long id) {
+    public GetBoardResponse getBoard(Long id) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(RuntimeException::new);
 
-        return BoardResponse.builder()
+        return GetBoardResponse.builder()
                 .id(board.getId())
                 .title(board.getTitle())
                 .content(board.getContent())
                 .likes(board.getLikes())
                 .build();
+    }
+
+    @Transactional
+    public Long modifyBoard(Long id, ModifyBoardRequest request) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(RuntimeException::new);
+        board.modifyBoard(request.getTitle(), request.getContent());
+        boardRepository.save(board);
+
+        return id;
     }
 }

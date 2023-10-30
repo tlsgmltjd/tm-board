@@ -1,4 +1,4 @@
-package com.example.tmboard.domain.entity;
+package com.example.tmboard.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +30,11 @@ public class Board {
         this.title = title;
         this.content = content;
         this.likes = 0;
+    }
+
+    public void modifyBoard(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 }
 

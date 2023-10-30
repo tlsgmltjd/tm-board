@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateRequest {
+public class CreateBoardRequest {
     @NotBlank
     private String title;
     @NotBlank
