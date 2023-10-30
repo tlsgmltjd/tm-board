@@ -6,11 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-@Builder
 @NoArgsConstructor
-public class BoardsResponse {
+@Builder
+@AllArgsConstructor
+public class BoardResponse {
     private Long id;
     private String title;
+    private String content;
     private Integer likes;
 }

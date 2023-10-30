@@ -1,6 +1,7 @@
 package com.example.tmboard.api;
 
 import com.example.tmboard.api.dto.request.CreateRequest;
+import com.example.tmboard.api.dto.response.BoardResponse;
 import com.example.tmboard.api.dto.response.BoardsResponse;
 import com.example.tmboard.core.BoardService;
 import com.example.tmboard.util.MsgResponseDto;
@@ -31,6 +32,10 @@ public class BoardController {
     }
 
     // 특정 글 찾기
+    @GetMapping("/{id}")
+    public ResponseEntity<BoardResponse> getBoard(@PathVariable Long id) {
+        return ResponseEntity.ok(boardService.getBoard(id));
+    }
 
     // 글 수정
 
