@@ -64,4 +64,14 @@ public class BoardService {
         if (!boardRepository.existsById(id)) throw new RuntimeException();
         boardRepository.deleteById(id);
     }
+
+    @Transactional
+    public Integer likes(Long id) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(RuntimeException::new);
+        board.likes(board.getLikes() + 1);
+        boardRepository.save(board);
+
+        return board.getLikes();
+    }
 }

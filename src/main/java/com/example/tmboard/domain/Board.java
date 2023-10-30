@@ -36,5 +36,9 @@ public class Board {
         this.title = title;
         this.content = content;
     }
+
+    public void likes(Integer likes) {
+        this.likes = likes;
+    }
 }
 

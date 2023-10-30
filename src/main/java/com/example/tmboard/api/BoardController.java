@@ -1,9 +1,11 @@
 package com.example.tmboard.api;
 
 import com.example.tmboard.api.dto.request.CreateBoardRequest;
+import com.example.tmboard.api.dto.request.LikesRequest;
 import com.example.tmboard.api.dto.request.ModifyBoardRequest;
 import com.example.tmboard.api.dto.response.GetBoardResponse;
 import com.example.tmboard.api.dto.response.GetBoardsResponse;
+import com.example.tmboard.api.dto.response.LikesResponse;
 import com.example.tmboard.api.dto.response.ModifyBoardResponse;
 import com.example.tmboard.core.BoardService;
 import com.example.tmboard.util.MsgResponseDto;
@@ -53,4 +55,8 @@ public class BoardController {
     }
 
     // 좋아요 누르기
+    @PostMapping("/like")
+    public ResponseEntity<LikesResponse> likesBoard(@RequestBody LikesRequest request) {
+        return ResponseEntity.ok(new LikesResponse(boardService.likes(request.getBoardId())));
+    }
 }
